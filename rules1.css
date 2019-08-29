@@ -1,0 +1,15 @@
+body {
+  font-family: fantasy, sans-serif;font-style: normal; font-weight: lighter;
+}
+h1 {
+  color: #690420;
+}
+p {
+  font-family: arial, sans-serif; color:darkgrey;
+}
+p2 {
+  font-style: italic;font-weight: bold;
+}
+a {
+  background-color: #690420; color: white;
+}

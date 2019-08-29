@@ -1,0 +1,40 @@
+body {
+  font-family: fantasy, sans-serif;font-style: normal;
+}
+h1 {
+  color: #690420;
+}
+p {
+  font-family: arial, sans-serif; color:darkgrey;
+}
+p2 {
+  font-style: italic;font-weight: bold; bottom: 50px
+}
+a {
+  background-color: #690420; color: white;
+}
+nav {
+  background-color: lightgray;
+  height: 3em;
+}
+nav ul {
+  list-style-type: none;
+  padding-left: 0;
+  vertical-align: middle;
+}
+nav li {
+  display: inline-block;
+  vertical-align: middle;
+}
+nav li a {
+  text-decoration: none;
+  color: lightgray;
+}
+.back {
+position: absolute;
+left: 20px;
+}
+.forward {
+  position: absolute;
+  right: 20px;
+}
