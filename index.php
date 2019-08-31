@@ -74,5 +74,8 @@ Here we will show the same music links again, but this time in a list
 <p>
   <font size="+3"> <center>
 <a target="_blank" href="cssi.htm"> Link to a css first study page </a></font></center></p>
+<ul>
+  <li><a href="first.php" class="forward"> &rArr;&hearts;First php page</a></li>
+</ul>
 </body>
 </html>
