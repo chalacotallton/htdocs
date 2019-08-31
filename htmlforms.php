@@ -12,7 +12,7 @@
   <form method="post">
       <p><label for="post method"> Input post form</label>
       <input type="text" name="post method" size="40" id="postid"/></p>
-      <input type="submit" />
+      <input type="submit" value="kkkk"/>
   </form>
   <pre>
     $_POST;
