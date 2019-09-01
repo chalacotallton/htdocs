@@ -22,4 +22,8 @@
   print_r($_POST);
 ?>
   </pre>
+  <ul>
+    <li><a href="test1.htm" class="back"> &lArr;&hearts; o First Page</a></li>
+    <li><a href="htmlinputtypes.php" class="forward"> &rArr;&hearts;First php page (not actually)</a></li>
+  </ul>
 </body>
