@@ -39,7 +39,7 @@
     <input type="checkbox" name="Suco de laranja" value="Suco de laranja"> Suco de laranja<br>
     <input type="checkbox" name="Suco de maracujá" value="Suco de maracuja"> Suco de maracujá<br>
     <input type="checkbox" name="Coca-cola" value="Coca-cola"> Coca-cola<br>
-    <input type="checkbox" name="Guarana antartica" value="Guarana antartica"> Guarana antartica<br>
+    <input type="checkbox" name="Guarana antartica" value="Guarana antartica" checked> Guarana antartica<br>
     <input type="checkbox" name="Fanta laranja" value="Fanta laranja"> Fanta laranja<br>
   </p>
   <p>
@@ -56,7 +56,7 @@
   <p>
     Seus Dados<br>
     <p><label for="inpname"> Nome:</label>
-    <input type="text" name="inpname" id="inpname" size="60"></p>
+    <input type="text" name="inpname" id="inpname" size="60" value="seu nome aqui"></p>
     <p><label for="inptelefone"> Telefone: </label>
     <input type="text" name="inptelefone" id="inptelefone" size="40"></p>
     <p><label for="inpemail"> Email: </label>
@@ -64,6 +64,11 @@
   </p>
   <p>
     Informações Complementares<br>
+    <label for="dropdownmenu">
+    <select name="talheres" id="dropdownmenu">
+      <option value="0">Não preciso de talheres</option>
+      <option value="1" selected>Preciso de talheres</option>
+    </select>
     <p><label for="inpbox"> O que vc gostaria de nos dizer? <br/>
       <textarea rows="10" cols="40" id="inpbox" name="complementar">
         Sugestões, pedidos, elogios...
@@ -73,6 +78,8 @@
     <input type="submit" name="dopost" value="Confirmar pedido" />
     <input type="button" onclick="location.href='index.php'; return false;" value="Cancelar pedido">
   </p>
+
 </form>
+<?= htmlentities("&") ?>
 </body>
 </html>
