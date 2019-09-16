@@ -67,18 +67,18 @@ INSERT INTO Track (title, rating, len, count, album_id, genre_id)
 SELECT Album.title, Artist.name FROM Album JOIN Artist ON
     Album.artist_id = Artist.artist_id
 
-SELECT Album.title, Album.artist_id, Artist.artist_id, Artist.name 
+SELECT Album.title, Album.artist_id, Artist.artist_id, Artist.name
     FROM Album JOIN Artist ON Album.artist_id = Artist.artist_id
 
-SELECT Track.title, Track.genre_id, Genre.genre_id, Genre.name 
+SELECT Track.title, Track.genre_id, Genre.genre_id, Genre.name
     FROM Track JOIN Genre
 
-SELECT Track.title, Genre.name FROM Track JOIN Genre ON 
+SELECT Track.title, Genre.name FROM Track JOIN Genre ON
     Track.genre_id = Genre.genre_id;
 
-SELECT Track.title, Artist.name, Album.title, Genre.name 
-    FROM Track JOIN Genre JOIN Album JOIN Artist 
-    ON Track.genre_id = Genre.genre_id AND Track.album_id = 
+SELECT Track.title, Artist.name, Album.title, Genre.name
+    FROM Track JOIN Genre JOIN Album JOIN Artist
+    ON Track.genre_id = Genre.genre_id AND Track.album_id =
     Album.album_id AND Album.artist_id = Artist.artist_id
 
 DELETE FROM Genre WHERE name = 'Metal'
@@ -140,6 +140,3 @@ SELECT Account.name, Member.role, Course.title
   ON Member.account_id = Account.account_id
     AND Member.course_id = Course.course_id
   ORDER BY Course.title, Member.role DESC, Account.name
-
-
-
