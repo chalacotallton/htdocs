@@ -1,6 +1,19 @@
 <?php
   require_once "pdo.php";
   session_start();
+    if(isset($_SESSION['addpokemonmsgsuccess'])) {
+      echo('<p style="color:green">'.$_SESSION['addpokemonmsgsuccess'].'</p>');
+      unset($_SESSION['addpokemonmsgsuccess']);
+    }
+    if(isset($_SESSION['deletepokemonmsgsuccess'])) {
+      echo('<p style="color:red">'.$_SESSION['deletepokemonmsgsuccess'].'</p>');
+      unset($_SESSION['deletepokemonmsgsuccess']);
+    }
+    if(isset($_SESSION['editpokemonmsgsuccess'])) {
+      echo('<p style="color:green">'.$_SESSION['editpokemonmsgsuccess'].'</p>');
+      unset($_SESSION['editpokemonmsgsuccess']);
+    }
+
 ?>
 <!DOCTYPE html>
 <html>
