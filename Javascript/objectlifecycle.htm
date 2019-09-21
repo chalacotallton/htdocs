@@ -1,0 +1,33 @@
+<html>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <title>JavaScript - Object Life Cycle</title>
+
+</head>
+<body>
+  <script type="text/javascript">
+  function PartyHard(nam) {
+    this.x = 0;
+    this.name = nam;
+    console.log("Built "+nam);
+    this.party = function () {
+      this.x += 1;
+      console.log(nam+"="+this.x);
+    }
+  }
+  s = new PartyHard("Sally");
+  s.party();
+  j = new PartyHard("Jim");
+  j.party();
+  s.party();
+  s.stuff = "hello";
+  console.log(s.stuff);
+  </script>
+  <p>
+    <a href="#">Next Page</a>
+  </p>
+
+
+</body>
+</html>

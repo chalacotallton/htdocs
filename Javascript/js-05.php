@@ -1,4 +1,3 @@
-
 <html>
 <head>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
@@ -23,6 +22,6 @@
       alert('Hi There ' + st);
       </script>
     </p>
-
+    <p><a href="objectlifecycle.htm">Next Page</a>
 </body>
 </html>
