@@ -1,12 +1,11 @@
 body {
-  font-family: arial, sans-serif;font-style: normal; color:black;
+  font-family: fantasy, sans-serif;font-style: normal;
 }
 h1 {
   color: #690420;
 }
 p {
-  font-family: arial, sans-serif;
-  color:black;
+  font-family: arial, sans-serif; color:darkgrey;
 }
 p2 {
   font-style: italic;font-weight: bold; bottom: 50px
@@ -30,7 +29,6 @@ nav li {
 nav li a {
   text-decoration: none;
   color: lightgray;
-  vertical-align: middle;
 }
 .back {
 position: absolute;
