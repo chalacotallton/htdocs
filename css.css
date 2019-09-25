@@ -1,3 +1,5 @@
+/*this is how we add comments to a css file, much like the multiline c++ comment*/
+/*but we lack the one-line // comment*/
 @font-face {
   font-family: 'tr';
   src: url('fonts/tr.eot'); /* IE9 Compat Modes */
