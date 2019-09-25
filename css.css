@@ -1,15 +1,5 @@
 /*this is how we add comments to a css file, much like the multiline c++ comment*/
 /*but we lack the one-line // comment*/
-@font-face {
-  font-family: 'tr';
-  src: url('fonts/tr.eot'); /* IE9 Compat Modes */
-  src: url('fonts/tr.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('fonts/tr.woff2') format('woff2'), /* Super Modern Browsers */
-       url('fonts/tr.woff') format('woff'), /* Pretty Modern Browsers */
-       url('fonts/tr.ttf')  format('truetype'), /* Safari, Android, iOS */
-       url('fonts/tr.svg#svgFontName') format('svg'); /* Legacy iOS */
-}
-
 body {
   font-family: fantasy, sans-serif;
 }
@@ -44,14 +34,13 @@ a {
 #esquerda {
   word-wrap:break-word;
   height:80%;
-
   width:25%;
 }
 .child {
     position: relative;
     top : 50%;
     color: white;
-    font-family: 'tr', sans-serif;
+    font-family: 'Turret Road', sans-serif;
     font-size:2.5vw;
 
 
