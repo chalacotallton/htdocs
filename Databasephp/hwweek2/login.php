@@ -16,12 +16,14 @@
             }
           }
           if(!$str_check) {
-            echo('Email must have an at-sign (@)');
+
+            echo('<p style="color:red">Email must have an at-sign (@) </p>');
           }
 
           else if ( $check == $stored_hash ) {
             $_SESSION['LOGIN'] = true;
-              header("Location: autos.php?name=".urlencode($_POST['who']));
+            error_log("Login success ".$_POST['who']);
+            header('Location:autos.php?name='.urlencode($_POST['who']));
               return;
           } else {
               error_log("Login fail ".$_POST['who']." $check");
@@ -50,8 +52,8 @@
     <table>
       <tr><td>User Email: </td><td><input type="text" name="who"></td></tr>
       <tr><td>Password: </td><td><input type="password" name="pass"></td></tr>
-      <tr><td><input type="submit" name="submit" value="submit"></td>
-      <td><input type="button" name="cancel" onclick="location.href='index.php'; return false;" value="cancel"></td></tr>
+      <tr><td><input type="submit" name="submit" value="Log In"></td>
+      <td><input type="button" name="cancel" onclick="location.href='index.php'; return false;" value="Cancel"></td></tr>
     </table>
   </form>
 </main>

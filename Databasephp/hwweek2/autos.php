@@ -1,5 +1,6 @@
 <?php
   session_start();
+  require_once "pdo.php";
   if(!isset($_SESSION['LOGIN']) || !isset($_GET['name'])) {
     die("Name parameter missing");
   }
@@ -16,7 +17,17 @@
     if(!is_numeric($_POST['year']) || !is_numeric($_POST['mileage']))
     $message = 'Mileage and year must be numeric';
   }
-  echo($message);
+  if (isset($_POST['add']) && !$message) {
+
+    $stmt = $pdo->prepare('INSERT INTO autos
+        (make, year, mileage) VALUES ( :mk, :yr, :mi)');
+        $stmt->execute(array(
+            ':mk' => $_POST['make'],
+            ':yr' => $_POST['year'],
+            ':mi' => $_POST['mileage'])
+        );
+      $_SESSION['msgsuccess'] = 'Record Inserted';
+  }
 ?>
 <!DOCTYPE html>
 <html>
@@ -31,6 +42,16 @@
   <h1>Tracking Autos for <?= htmlentities($_GET['name'])?> </h1>
 </header>
 <main>
+  <?php
+    if($message !== false)
+    {
+      echo('<p style="color:red";>'.$message.'</p>');
+    }
+    else if(isset($_SESSION['msgsuccess'])) {
+      echo('<p style="color:green";>'.$_SESSION['msgsuccess'].'</p>');
+      unset($_SESSION['msgsuccess']);
+    }
+  ?>
   <form method="post">
   <table>
     <tr><td>Make</td><td><input type="text" name="make" size="60"></td></tr>
@@ -39,9 +60,17 @@
     <tr><td><input type="submit" name="add" value="Add"></td><td><input type="submit" name="logout" value="Logout"></td></tr>
   </table>
   </form>
-  <div>
+  <div id="result">
     <h1>Automobiles<br></h1>
-
+    <?php
+    $stmt = $pdo->query("SELECT make, year, mileage FROM autos");
+    while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      echo(htmlentities($row['year']).' ');
+      echo(htmlentities($row['make']).' / ');
+      echo(htmlentities($row['mileage']));
+      echo nl2br("\n");
+    }
+    ?>
   </div>
 </main>
 </body>
