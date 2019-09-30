@@ -19,11 +19,11 @@
 
             echo('<p style="color:red">Email must have an at-sign (@) </p>');
           }
-
           else if ( $check == $stored_hash ) {
             $_SESSION['LOGIN'] = true;
+            $_SESSION['who'] = $_POST['who'];
             error_log("Login success ".$_POST['who']);
-            header('Location:autos.php?name='.urlencode($_POST['who']));
+            header('Location:view.php');
               return;
           } else {
               error_log("Login fail ".$_POST['who']." $check");
