@@ -1,8 +1,6 @@
 <?php
   session_start();
-  unset($_SESSION['LOGIN']);
-  unset($_SESSION['msgsuccess']);
-  unset($_SESSION['who']);
+  session_destroy();
   header('Location:index.php');
   return;
 ?>

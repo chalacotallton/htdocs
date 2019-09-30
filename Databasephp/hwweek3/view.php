@@ -1,7 +1,7 @@
 <?php
   session_start();
   require_once "pdo.php";
-  if(!isset($_SESSION['LOGIN']) ) {
+  if(!isset($_SESSION['name']) ) {
     die("Not logged in");
   }
 ?>
@@ -15,13 +15,13 @@
 </head>
 <body>
 <header>
-  <h1>Tracking Autos for <?= htmlentities($_SESSION['who'])?> </h1>
+  <h1>Tracking Autos for <?= htmlentities($_SESSION['name'])?> </h1>
 </header>
 <main>
     <?php
-    if(isset($_SESSION['msgsuccess'])) {
-      echo('<p style="color:green">'.$_SESSION['msgsuccess'].'</p>');
-      unset($_SESSION['msgsuccess']);
+    if(isset($_SESSION['success'])) {
+      echo('<p style="color:green">'.htmlentities($_SESSION['success']).'</p>');
+      unset($_SESSION['success']);
     }
     ?>
     <h1>Automobiles<br></h1>
