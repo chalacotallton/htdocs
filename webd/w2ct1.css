@@ -1,0 +1,34 @@
+body {
+  background-color: #b3b3b3;
+  font-size: 150%;
+  margin:4%;
+}
+a {
+  display: inline-block;
+  background-color: red;
+  text-decoration: none;
+}
+header {
+
+}
+section {
+  width: 30%;
+  display: inline-block;
+  float: left;
+  border-width: 10px 3px 5px 9px;
+  background-color: #00f7ff52;
+  padding: 3px 10px;
+  margin: 1px;
+  border-style: solid;
+}
+footer {
+  clear: both;
+}
+.box {
+  color:red;
+  clear: both;
+}
+.fancy {
+  color:green;
+  clear: both;
+}
