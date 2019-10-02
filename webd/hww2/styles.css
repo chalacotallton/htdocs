@@ -1,0 +1,48 @@
+body {
+  padding: 1%;
+  margin: 1%;
+}
+header {
+  background-color: gray;
+  background-image: url("images/a.jpg");
+  padding: 1%;
+  text-align: center;
+  background-size: cover;
+}
+header h1 {
+  font-variant-caps: all-small-caps;
+  color: #fff;
+}
+nav a{
+  text-decoration: none;
+  color: black;
+  display: inline-block;
+  width: 15%;
+  background-color: #ffffff2b;
+  border-radius: 15%;
+  padding: 15px;
+  margin: 7px;
+  font-size: 150%
+}
+nav a:hover {
+  background-color: #fff;
+  color: blue;
+}
+#preview {
+  float:left;
+  width:25%;
+  text-align: center;
+  background-color: #6d8c0bc7;
+}
+#preview img {
+  width:70%;
+  border: 2px;
+  border-style: solid;
+  margin: 14%;
+}
+main{
+  margin: 1%;
+  float: left;
+  width: 71%;
+  padding: 1%;
+}
