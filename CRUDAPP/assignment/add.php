@@ -45,7 +45,7 @@
 </head>
 <body>
   <header>
-    <p>Tracking Automobiles for <?= htmlentities($_SESSION['name'])?></p>
+    <p>Tracking Automobiles for <?= $_SESSION['name']?></p>
     <?php
     if(isset($_SESSION['error'])) {
       echo($_SESSION['error']);
