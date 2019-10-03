@@ -4,6 +4,9 @@
   if(isset($_POST['cancel'])) {
     header("location: index.php");
   }
+  if(!isset($_SESSION['name'])) {
+    die('<p style="font-size:130%">'.'ACCESS DENIED'.'</p>');
+  }
   if(isset($_POST['save'])) {
     if(strlen(htmlentities($_POST['make'])) <= 0 || strlen(htmlentities($_POST['model'])) <= 0 || strlen(htmlentities($_POST['year'])) <= 0 || strlen(htmlentities($_POST['mileage'])) <= 0) {
       $_SESSION['error'] = '<p style="color:red">'.'All fields are required'.'</p>';

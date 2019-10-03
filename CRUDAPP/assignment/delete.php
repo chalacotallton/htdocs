@@ -1,10 +1,33 @@
 <?php
   session_start();
   require_once "pdo.php";
-  if (isset($_POST['pokemon_id'])) {
-    $delstmt = $pdo->prepare("DELETE FROM Pokemon WHERE pokemon_id = :pokemon2del");
-    $delstmt->execute(array("pokemon2del" => $_SESSION['pokemon2del']));
-    $_SESSION['deletepokemonmsgsuccess'] = $_SESSION['pokemon2delname'].' was deleted from your Pokédex!';
+  if(!isset($_SESSION['name'])) {
+    die('<p style="font-size:130%">'.'ACCESS DENIED'.'</p>');
+  }
+  if(isset($_GET['autos_id']) && is_numeric($_GET['autos_id'])) {
+    $prtstmt = $pdo->prepare("SELECT make FROM autos WHERE autos_id=:id LIMIT 1");
+    $prtstmt->execute(array(':id'=>$_GET['autos_id']));
+    $row = $prtstmt->fetch(PDO::FETCH_ASSOC);
+    if(strlen($row['make']) > 0) {
+      $auto2del = htmlentities($row['make']);
+      if (isset($_POST['delete'])) {
+        $delstmt = $pdo->prepare("DELETE FROM autos WHERE autos_id = :auto2del");
+        $delstmt->execute(array(
+          ':auto2del' => $_GET['autos_id']
+        ));
+        $_SESSION['error'] = '<p style="color:green">'.'Record deleted'.'</p>';
+        header("location: index.php");
+        return;
+      }
+    }
+    else {
+      $_SESSION['error'] = '<p style="color:red">'.'Bad value for id'.'</p>';
+      header("location: index.php");
+      return;
+    }
+  }
+  else {
+    $_SESSION['error'] = '<p style="color:red">'.'Bad value for id'.'</p>';
     header("location: index.php");
     return;
   }
@@ -12,33 +35,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Confirm Delete</title>
+  <title>Tallton Chalaco Lacerda Santos - Automobile Tracker</title>
 </head>
 <body>
-  <?php
-  if(isset($_GET['pokemon_id'])) {
-    $prtstmt = $pdo->prepare("SELECT name, pokemon_id FROM Pokemon WHERE pokemon_id=:id LIMIT 1");
-    $prtstmt->execute(array(':id'=>$_GET['pokemon_id']));
-    $row = $prtstmt->fetch(PDO::FETCH_ASSOC);
-    $_SESSION['pokemon2del'] = htmlentities($row['pokemon_id']);
-    $_SESSION['pokemon2delname'] = htmlentities($row['name']);
-    if(strlen($row['name']) > 0) { ?>
-      <p>Confirm Deleting: <?= $row['name']?></p>
-      <form method="post">
-        <input type="hidden" name="pokemon_id" value="<?= $row['pokemon_id']?>">
-        <input type="submit" value="Delete" name="delete">
-        <a href="index.php">Cancel</a>
-      </form>
-  <?php
-    }
-    else {
-      echo ('<p style="color:red"> Error! No Pokemon found with Pokédex # '. htmlentities($_GET['pokemon_id']).'!</p>');
-      echo ('Click <a href="index.php">Here</a> to go back');
-    }
-  }
-  else  {
-    echo ('<p style="color:red"> Error! Pokemon ID is missing!</p>');
-    echo ('Click <a href="index.php">Here</a> to go back');
-  }?>
+  <main>
+    <p>Confirm: Deleting <?=$auto2del?></p>
+    <form method="post">
+      <input type="submit" name="delete" value="Delete"> <a href="index.php">Cancel</a>
+  </main>
 </body>
 </html>
