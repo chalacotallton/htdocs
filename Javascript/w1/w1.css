@@ -1,0 +1,14 @@
+html {
+  margin-left: 3%;
+  margin-top: 1%;
+}
+header {
+  font-family: 'Turret Road', sans-serif;
+}
+main {
+  font-family: sans-serif;
+  font-size: 120%;
+}
+a {
+  text-decoration: none;
+}
