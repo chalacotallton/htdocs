@@ -19,16 +19,15 @@
   </header>
   <main>
     <?php
-      if(isset($_SESSION['name'])) {
-            $stmt = $pdo->query("SELECT user_id, first_name, last_name, headline, profile_id, email, summary FROM Profile");
-            while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-
+    $stmt = $pdo->prepare('SELECT profile_id, first_name, last_name, email, headline, summary  FROM Profile WHERE user_id = :em');
+    $stmt->execute(array( ':em' => $_GET['profile_id']));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+      if($row !== false) {
               echo('<p>First Name: '.htmlentities($row['first_name']).'</p>');
               echo('<p>Last Name: '.htmlentities($row['last_name']).'</p>');
               echo('<p>Email: '.htmlentities($row['email']).'</p>');
               echo('<p>Headline:</p><p>'.htmlentities($row['headline']).'</p>');
               echo('<p>Summary:</p><p>'.htmlentities($row['summary']).'</p>');
-            }
       }
       else {
         $_SESSION['error'] = '<p style=color:red>Could not load profile</p>';
