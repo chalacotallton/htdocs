@@ -20,7 +20,7 @@
   <main>
     <?php
     $stmt = $pdo->prepare('SELECT profile_id, first_name, last_name, email, headline, summary  FROM Profile WHERE user_id = :em');
-    $stmt->execute(array( ':em' => $_GET['profile_id']));
+    $stmt->execute(array( ':em' => (is_numeric($_GET['profile_id'])) ? $_GET['profile_id'] : false));
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
       if($row !== false) {
               echo('<p>First Name: '.htmlentities($row['first_name']).'</p>');
