@@ -1,9 +1,6 @@
 <?php
   session_start();
   require_once "pdo.php";
-  print_r($_GET['profile_id']);
-  /*agora fazer uma comparação no servidor php (alterando o if, o else já está certo) para ver se o id existe e mostrar a informação apenas dele.
-  caso não exista redirecionar para o main*/
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -19,7 +16,7 @@
   </header>
   <main>
     <?php
-    $stmt = $pdo->prepare('SELECT profile_id, first_name, last_name, email, headline, summary  FROM Profile WHERE user_id = :em');
+    $stmt = $pdo->prepare('SELECT first_name, last_name, email, headline, summary  FROM Profile WHERE profile_id = :em');
     $stmt->execute(array( ':em' => (is_numeric($_GET['profile_id'])) ? $_GET['profile_id'] : false));
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
       if($row !== false) {

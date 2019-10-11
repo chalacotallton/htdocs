@@ -31,7 +31,7 @@
       <!--add aqui a tabela-->
       <div>
           <?php
-            $stmt = $pdo->query("SELECT user_id, first_name, last_name, headline, profile_id FROM Profile");
+            $stmt = $pdo->query("SELECT first_name, last_name, headline, profile_id FROM Profile");
             while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
           ?>
           <table class="tableshow">
@@ -47,7 +47,7 @@
               echo "</td><td>";
               echo(htmlentities($row['headline']));
               echo "</td><td>";
-              echo('<a href="edit.php?user_id='.$row['user_id'].'">Edit</a>'." / ".'<a href="delete.php?user_id='.$row['user_id'].'">Delete</a>');
+              echo('<a href="edit.php?profile_id='.$row['profile_id'].'">Edit</a>'." / ".'<a href="delete.php?profile_id='.$row['profile_id'].'">Delete</a>');
               echo "</td></tr>\n";
             }
           ?>
@@ -64,7 +64,7 @@
     </div>
     <div>
       <?php
-        $stmt = $pdo->query("SELECT user_id, first_name, last_name, headline, profile_id FROM Profile");
+        $stmt = $pdo->query("SELECT first_name, last_name, headline, profile_id FROM Profile");
         while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       ?>
       <table class="tableshow">
