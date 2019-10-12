@@ -32,6 +32,7 @@
         return;
       }
       ?>
+    <a href="index.php">Done</a>
   </main>
 </body>
 </html>

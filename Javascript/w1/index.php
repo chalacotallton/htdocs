@@ -30,17 +30,15 @@
       </div>
       <!--add aqui a tabela-->
       <div>
+        <table class="tableshow">
+          <tr>
+            <th>Name</th>
+            <th>Headline</th>
+            <th>Action</th>
+          </tr>
           <?php
             $stmt = $pdo->query("SELECT first_name, last_name, headline, profile_id FROM Profile");
             while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-          ?>
-          <table class="tableshow">
-            <tr>
-              <th>Name</th>
-              <th>Headline</th>
-              <th>Action</th>
-            </tr>
-          <?php
               echo "<tr><td>";
               echo("<a href=view.php?profile_id=".$row['profile_id'].">".
               (htmlentities($row['first_name'].' '.$row['last_name']))."</a>");
@@ -63,16 +61,14 @@
       <a href=login.php>Please log in</a>
     </div>
     <div>
-      <?php
-        $stmt = $pdo->query("SELECT first_name, last_name, headline, profile_id FROM Profile");
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-      ?>
       <table class="tableshow">
         <tr>
           <th>Name</th>
           <th>Headline</th>
         </tr>
       <?php
+        $stmt = $pdo->query("SELECT first_name, last_name, headline, profile_id FROM Profile");
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
           echo "<tr><td>";
           echo("<a href=view.php?profile_id=".$row['profile_id'].">".
           (htmlentities($row['first_name'].' '.$row['last_name']))."</a>");
