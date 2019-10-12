@@ -15,20 +15,28 @@
     }
     if (strlen($_POST['first_name']) < 1 || strlen($_POST['last_name']) < 1 || strlen($_POST['email']) < 1 || strlen($_POST['headline']) < 1 || strlen($_POST['summary']) < 1 ) {
       $_SESSION['error'] = '<p style=color:red>All fields are required</p>';
-      header('Location:edit.php');
+      header('Location:edit.php?profile_id='.htmlentities($_GET['profile_id']));
       return;
     }
     elseif((isemail()) ? false : true) {
       $_SESSION['error'] = '<p style=color:red>Email address must contain @</p>';
-      header('Location:edit.php');
+      header('Location:edit.php?profile_id='.htmlentities($_GET['profile_id']));
       return;
     }
     else {
-      /*$stmt = $pdo->prepare('INSERT INTO Profile (user_id, first_name, last_name, email, headline, summary) VALUES ( :uid, :fn, :ln, :em, :he, :su)');
-      $stmt->execute(array(':uid' => $_SESSION['user_id'], ':fn' => $_POST['first_name'], ':ln' => $_POST['last_name'], ':em' => $_POST['email'], ':he' => $_POST['headline'], ':su' => $_POST['summary']));
-      $_SESSION['error'] = '<p style=color:green>Profile added</p>';
-      header('Location:index.php');
-      return;*/
+      $sql = "UPDATE Profile SET first_name=:b, last_name=:c, email=:d, headline=:f, summary=:e WHERE profile_id=:a";
+      $stmt = $pdo->prepare($sql);
+      $stmt->execute(array(
+        ':a' => $_GET['profile_id'],
+        ':b' => $_POST['first_name'],
+        ':c' => $_POST['last_name'],
+        ':d' => $_POST['email'],
+        ':e' => $_POST['headline'],
+        ':f' => $_POST['summary']
+      ));
+      $_SESSION['error'] = '<p style="color:green">Profile updated</p>';
+      header("location: index.php");
+      return;
     }
   }
 ?>
