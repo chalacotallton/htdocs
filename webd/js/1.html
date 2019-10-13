@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <script src="1.js"></script>
+    <link rel="stylesheet" href="1.css">
+  </head>
+  <body>
+    <header>
+      <h1>This is my javascript study page</h1>
+    </header>
+    <main>
+      <button type="button" name="button1" onclick="clicked(1)">Button 1</button>
+      <button type="button" name="button2" onclick="clicked(2)">Button 2</button>
+      <button type="button" name="button3" onclick="openMe()">Button 3</button>
+      <button type="button" name="button4" onclick="closeMe()">Button 4</button>
+    </main>
+    <footer>
+      <p class="class2">This code shouldn't change.</p>
+      <p id="changeable">You haven't clicked any button yet!</p>
+      <p class="class2">This code shouldn't change either.</p>
+      <p id="openclose">Default style</p>
+      <p id="diferentao">this is the caption of the figures</p>
+      <img src="../../pic.jpeg" alt="First pic" onmouseover="showProperties(this)" onmouseleave = "document.getElementById('diferentao').innerHTML = 'This is the caption of the figures'">
+      <img src="../../pic.jpeg" alt="Second pic" onmouseover="showProperties(this)" onmouseleave = "document.getElementById('diferentao').innerHTML = 'This is the caption of the figures'">
+      <img src="../../pic.jpeg" alt="Third pic" onmouseover="showProperties(this)" onmouseleave = "document.getElementById('diferentao').innerHTML = 'This is the caption of the figures'">
+      <img src="../../pic.jpeg" alt="First pic" onmouseover="showProperties2(this)">
+    </footer>
+
+  </body>
+</html>
