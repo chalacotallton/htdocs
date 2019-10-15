@@ -13,6 +13,7 @@
         fruits.push(fruit);
         document.getElementById("fruits").innerHTML = fruits;
       }
+
     </script>
   </head>
   <body onload="loadFruits()">
@@ -21,5 +22,26 @@
       Add your Favorite
     </button>
     <p id="fruits"></p>
+    <div id="toerase">
+      <form class="forms" method="post">
+        <label for="text">Permanent text</label>
+        <input type="text" name="text" id="permanent" value="permanent text"/>
+      </form>
+    </div>
+    <div id="toerase">
+      <form class="forms" method="post">
+        <label for="text2">vanishing text</label>
+        <input type="text" name="text2" id="vanishing" placeholder="vanishing text"/>
+      </form>
+    </div>
+    <hr/>
+    <div class='printchatbox' id='printchatbox'></div>
+    <input type='text' name='fname' class='chatinput' id='chatinput'>
+    <script>
+    document.getElementById('chatinput').onkeyup = function() {
+      document.getElementById('printchatbox').innerHTML = document.getElementById('chatinput').value;
+    }
+    </script>
+
   </body>
 </html>
