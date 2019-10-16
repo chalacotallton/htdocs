@@ -8,6 +8,9 @@
   <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="w1.css">
   <link href="https://fonts.googleapis.com/css?family=Turret+Road&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
   <title>TALLTON CHALACO LACERDA SANTOS ' Resume Registry </title>
 </head>
 <body>
@@ -25,6 +28,17 @@
               echo('<p>Email: '.htmlentities($row['email']).'</p>');
               echo('<p>Headline:</p><p>'.htmlentities($row['headline']).'</p>');
               echo('<p>Summary:</p><p>'.htmlentities($row['summary']).'</p>');
+              $stmt = $pdo->prepare('SELECT year, description FROM Position WHERE profile_id = :em');
+              $stmt->execute(array( ':em' =>$_GET['profile_id']));
+              $subrow = $stmt->fetch(PDO::FETCH_ASSOC);
+              if($subrow !== false) {
+                  echo('<p>Position</p><ul>');
+                  echo('<li>'.$subrow['year'].': '.$subrow['description']);
+                  while($subrow = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    echo('<li>'.$subrow['year'].': '.$subrow['description']);
+                  }
+                  echo('</ul>');
+              }
       }
       else {
         $_SESSION['error'] = '<p style=color:red>Could not load profile</p>';
