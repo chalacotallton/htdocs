@@ -13,6 +13,29 @@
       }
       return false;
     }
+    function validatePos() {
+      for($i=0; $i<=9; $i++) {
+        if ( ! isset($_POST['year'.$i]) ) continue;
+        if ( ! isset($_POST['desc'.$i]) ) continue;
+
+        $year = $_POST['year'.$i];
+        $desc = $_POST['desc'.$i];
+
+        if ( strlen($year) == 0 || strlen($desc) == 0 ) {
+          return "<p style=color:red>All fields are required</p>";
+        }
+
+        if ( ! is_numeric($year) ) {
+          return "<p style=color:red>Position year must be numeric</p>";
+        }
+      }
+      return true;
+    }
+    if(validatePos() !== true) {
+      $_SESSION['error'] = validatePos();
+      header('Location:edit.php?profile_id='.htmlentities($_GET['profile_id']));
+      return;
+    }
     if (strlen($_POST['first_name']) < 1 || strlen($_POST['last_name']) < 1 || strlen($_POST['email']) < 1 || strlen($_POST['headline']) < 1 || strlen($_POST['summary']) < 1 ) {
       $_SESSION['error'] = '<p style=color:red>All fields are required</p>';
       header('Location:edit.php?profile_id='.htmlentities($_GET['profile_id']));
@@ -26,7 +49,7 @@
     else {
       $stmt = $pdo->prepare('DELETE FROM Position WHERE profile_id=:pid');
       $stmt->execute(array( ':pid' => $_REQUEST['profile_id']));
-    /*  $sql = "UPDATE Profile SET first_name=:b, last_name=:c, email=:d, headline=:f, summary=:e WHERE profile_id=:a";
+    $sql = "UPDATE Profile SET first_name=:b, last_name=:c, email=:d, headline=:f, summary=:e WHERE profile_id=:a";
       $stmt = $pdo->prepare($sql);
       $stmt->execute(array(
         ':a' => $_GET['profile_id'],
@@ -35,7 +58,22 @@
         ':d' => $_POST['email'],
         ':e' => $_POST['headline'],
         ':f' => $_POST['summary']
-      ));*/
+      ));
+      $rank = 0;
+      for($i=0; $i<=9; $i++) {
+        if ( ! isset($_POST['year'.$i]) ) continue;
+        if ( ! isset($_POST['desc'.$i]) ) continue;
+
+        $stmt = $pdo->prepare('INSERT INTO Position (profile_id, rank, year, description) VALUES ( :pid, :rank, :year, :desc)');
+        $stmt->execute(array(
+          ':pid' => $_GET['profile_id'],
+          ':rank' => $rank,
+          ':year' => $_POST['year'.$i],
+          ':desc' => $_POST['desc'.$i])
+        );
+
+      $rank++;
+      }
       $_SESSION['error'] = '<p style="color:green">Profile updated</p>';
       header("location: index.php");
       return;
