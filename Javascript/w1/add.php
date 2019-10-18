@@ -115,9 +115,16 @@
         <textarea name="summary" rows="12" cols="80"></textarea>
         </p>
         <p>
+          <label for="addEdu">Education:</label>
+          <input type="submit" id="addEdu" value="+">
+        </p>
+        <div id="Education_fields">
+        </div>
+        <p>
           <label for="addPos">Position:</label>
           <input type="submit" id="addPos" value="+">
         </p>
+
         <div id="position_fields">
         </div>
         <table>
@@ -126,6 +133,7 @@
         </table>
       </form>
     <script>
+    //add position
     var  countPos = 0;
       $(document).ready(function(){
         window.console && console.log('Document ready called');
@@ -150,6 +158,32 @@
           }
         })
       })
+
+      //add Education
+      var  countEdu = 0;
+        $(document).ready(function(){
+          window.console && console.log('Document ready called');
+          $('#addEdu').click(function() {
+            event.preventDefault();
+            window.console && console.log('plus signed clicked');
+            if(countEdu > 8) {
+              alert("Maximum of nine position entries exceeded");
+              window.console && console.log('countEdu: '+countEdu);
+            }
+            else {
+              $('#Education_fields').append(
+                '<div id="position'+countEdu+'"> \
+              <p>Year: <input type="text" name="year'+countEdu+'" value="" /> \
+              <input type="button" value="-" \
+                  onclick="$(\'#position'+countEdu+'\').remove();return false;"></p> \
+                  <input type="text" size="80" name="edu_school'+countEdu+'"> \
+              </div>');
+              window.console && console.log("appended into div");
+              countEdu++;
+              window.console && console.log('countEdu: '+countEdu);
+            }
+          })
+        })
     </script>
     </main>
   </body>
