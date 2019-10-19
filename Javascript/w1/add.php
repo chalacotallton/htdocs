@@ -231,7 +231,7 @@
               <p>Year: <input type="text" name="eduyear'+countEdu+'" value="" /> \
               <input type="button" value="-" \
                   onclick="$(\'#eduposition'+countEdu+'\').remove();return false;"></p> \
-                  <input type="text" size="80" name="edu_school'+countEdu+'" class="school" value=""> \
+                  <input type="text" size="80" name="edu_school'+countEdu+'" class="school" value="" /> \
               </div>');
               window.console && console.log("appended into div");
               countEdu++;
