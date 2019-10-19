@@ -104,19 +104,37 @@
       for($i=0; $i<9; $i++) {
         if ( ! isset($_POST['eduyear'.$i]) ) continue;
         if ( ! isset($_POST['edu_school'.$i]) ) continue;
-
-        $year = $_POST['eduyear'.$i];
-        $desc = $_POST['edu_school'.$i];
-        $stmt = $pdo->prepare('INSERT INTO Education (profile_id, rank, year, institution_id) VALUES ( :pid, :rank, :year, :desc)');
+        $stmt = $pdo->prepare('SELECT institution_id from Institution WHERE name = :institution');
         $stmt->execute(array(
-          ':pid' => $profile_id,
-          ':rank' => $rank,
-          ':year' => $year,
-          ':desc' => 1)
+          ':institution' => $_POST['edu_school'.$i])
         );
-
-      $rank++;
-
+        $institution = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (!empty($institution['institution_id'])) {
+          $year = $_POST['eduyear'.$i];
+          $stmt = $pdo->prepare('INSERT INTO Education (profile_id, rank, year, institution_id) VALUES ( :pid, :rank, :year, :institution)');
+          $stmt->execute(array(
+            ':pid' => $profile_id,
+            ':rank' => $rank,
+            ':year' => $year,
+            ':institution' => $institution['institution_id'])
+          );
+        }
+        else {
+          $stmt = $pdo->prepare('INSERT INTO Institution (name) VALUES ( :institution)');
+          $stmt->execute(array(
+            ':institution' => $_POST['edu_school'.$i])
+          );
+          $year = $_POST['eduyear'.$i];
+          $stmt = $pdo->prepare('INSERT INTO Education (profile_id, rank, year, institution_id) VALUES ( :pid, :rank, :year, :institution)');
+          $institution_id = $pdo->lastInsertId();
+          $stmt->execute(array(
+            ':pid' => $profile_id,
+            ':rank' => $rank,
+            ':year' => $year,
+            ':institution' => $institution_id)
+          );
+        }
+        $rank++;
       }
       /*Successfully added to the database*/
       $_SESSION['error'] = '<p style=color:green>Profile added</p>';
@@ -218,6 +236,9 @@
               window.console && console.log("appended into div");
               countEdu++;
               window.console && console.log('countEdu: '+countEdu);
+              $('.school').autocomplete({
+                source: "school.php"
+              });
             }
           })
         })
