@@ -28,7 +28,24 @@
               echo('<p>Email: '.htmlentities($row['email']).'</p>');
               echo('<p>Headline:</p><p>'.htmlentities($row['headline']).'</p>');
               echo('<p>Summary:</p><p>'.htmlentities($row['summary']).'</p>');
-              $stmt = $pdo->prepare('SELECT year, description FROM Position WHERE profile_id = :em');
+              $stmt = $pdo->prepare('SELECT year, institution_id FROM Education WHERE profile_id = :em ORDER BY rank');
+              $stmt->execute(array( ':em' =>$_GET['profile_id']));
+              $subrow = $stmt->fetch(PDO::FETCH_ASSOC);
+              $stmt2 = $pdo->prepare('SELECT name FROM Institution WHERE institution_id = :em');
+              if($subrow !== false) {
+                $stmt2->execute(array( ':em' =>$subrow['institution_id']));
+                $subrow_school = $stmt2->fetch(PDO::FETCH_ASSOC);
+                echo('<p>Education</p><ul>');
+                echo('<li>'.$subrow['year'].': '.$subrow_school['name']);
+                while($subrow = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                  $stmt2 = $pdo->prepare('SELECT name FROM Institution WHERE institution_id = :em');
+                  $stmt2->execute(array( ':em' =>$subrow['institution_id']));
+                  $subrow_school = $stmt2->fetch(PDO::FETCH_ASSOC);
+                  echo('<li>'.$subrow['year'].': '.$subrow_school['name']);
+                }
+                echo('</ul>');
+              }
+              $stmt = $pdo->prepare('SELECT year, description FROM Position WHERE profile_id = :em ORDER BY rank');
               $stmt->execute(array( ':em' =>$_GET['profile_id']));
               $subrow = $stmt->fetch(PDO::FETCH_ASSOC);
               if($subrow !== false) {
