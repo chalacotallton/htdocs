@@ -36,6 +36,30 @@
       header('Location:add.php');
       return;
     }
+    function validateEdu() {
+      for($i=0; $i<9; $i++) {
+        if ( ! isset($_POST['eduyear'.$i]) ) continue;
+        if ( ! isset($_POST['edu_school'.$i]) ) continue;
+
+        $year = $_POST['eduyear'.$i];
+        $desc = $_POST['edu_school'.$i];
+
+        if ( strlen($year) == 0 || strlen($desc) == 0 ) {
+          return "<p style=color:red>All fields are required</p>";
+        }
+
+        if ( ! is_numeric($year) ) {
+          return "<p style=color:red>Position year must be numeric</p>";
+        }
+      }
+      return true;
+    }
+  /* validar a educação*/
+    if(validateEdu() !== true) {
+      $_SESSION['error'] = validateEdu();
+      header('Location:add.php');
+      return;
+    }
     if (strlen($_POST['first_name']) < 1 || strlen($_POST['last_name']) < 1 || strlen($_POST['email']) < 1 || strlen($_POST['headline']) < 1 || strlen($_POST['summary']) < 1 ) {
       $_SESSION['error'] = '<p style=color:red>All fields are required</p>';
       header('Location:add.php');
@@ -73,8 +97,27 @@
         );
 
       $rank++;
-      }
 
+      }
+      //add the education (missing institution_id parameter)
+      $rank = 0;
+      for($i=0; $i<9; $i++) {
+        if ( ! isset($_POST['eduyear'.$i]) ) continue;
+        if ( ! isset($_POST['edu_school'.$i]) ) continue;
+
+        $year = $_POST['eduyear'.$i];
+        $desc = $_POST['edu_school'.$i];
+        $stmt = $pdo->prepare('INSERT INTO Education (profile_id, rank, year, institution_id) VALUES ( :pid, :rank, :year, :desc)');
+        $stmt->execute(array(
+          ':pid' => $profile_id,
+          ':rank' => $rank,
+          ':year' => $year,
+          ':desc' => 1)
+        );
+
+      $rank++;
+
+      }
       /*Successfully added to the database*/
       $_SESSION['error'] = '<p style=color:green>Profile added</p>';
       header('Location:index.php');
@@ -85,13 +128,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
-    <title>TALLTON CHALACO LACERDA SANTOS - ADD</title>
-    <link href="https://fonts.googleapis.com/css?family=Turret+Road&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="w1.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <?php require_once('head.php') ?>
   </head>
   <body>
     <header>
@@ -172,11 +209,11 @@
             }
             else {
               $('#Education_fields').append(
-                '<div id="position'+countEdu+'"> \
-              <p>Year: <input type="text" name="year'+countEdu+'" value="" /> \
+                '<div id="eduposition'+countEdu+'"> \
+              <p>Year: <input type="text" name="eduyear'+countEdu+'" value="" /> \
               <input type="button" value="-" \
-                  onclick="$(\'#position'+countEdu+'\').remove();return false;"></p> \
-                  <input type="text" size="80" name="edu_school'+countEdu+'"> \
+                  onclick="$(\'#eduposition'+countEdu+'\').remove();return false;"></p> \
+                  <input type="text" size="80" name="edu_school'+countEdu+'" class="school" value=""> \
               </div>');
               window.console && console.log("appended into div");
               countEdu++;
