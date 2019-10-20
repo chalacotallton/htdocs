@@ -147,13 +147,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
-    <title>TALLTON CHALACO LACERDA SANTOS - ADD</title>
-    <link href="https://fonts.googleapis.com/css?family=Turret+Road&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="w1.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <?php require_once('head.php') ?>
   </head>
   <body>
     <header>
@@ -202,7 +196,7 @@
           echo('<p>Year: <input type="text" name="eduyear'.$countEdu.'" value="'.$subrow['year'].'" />');
           echo('<input type="button" value="-"');
           echo(' onclick="$(\'#eduposition'.$countEdu.'\').remove();return false;"></p>');
-          echo('<input type="text" name="edu_school'.$countEdu.'" value="'.$subrow['name'].'"></div>
+          echo('<input type="text" name="edu_school'.$countEdu.'" class="school" value="'.$subrow['name'].'"></div>
           ');
           $countEdu++;
           }
@@ -283,6 +277,9 @@
                 });
               }
             })
+            $('.school').autocomplete({
+              source: "school.php"
+            });
           })
       </script>
     </main>
