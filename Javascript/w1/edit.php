@@ -36,6 +36,30 @@
       header('Location:edit.php?profile_id='.htmlentities($_GET['profile_id']));
       return;
     }
+    function validateEdu() {
+      for($i=0; $i<9; $i++) {
+        if ( ! isset($_POST['eduyear'.$i]) ) continue;
+        if ( ! isset($_POST['edu_school'.$i]) ) continue;
+
+        $year = $_POST['eduyear'.$i];
+        $desc = $_POST['edu_school'.$i];
+
+        if ( strlen($year) == 0 || strlen($desc) == 0 ) {
+          return "<p style=color:red>All fields are required</p>";
+        }
+
+        if ( ! is_numeric($year) ) {
+          return "<p style=color:red>Position year must be numeric</p>";
+        }
+      }
+      return true;
+    }
+  /* validar a educação*/
+    if(validateEdu() !== true) {
+      $_SESSION['error'] = validateEdu();
+      header('Location:edit.php?profile_id='.htmlentities($_GET['profile_id']));
+      return;
+    }
     if (strlen($_POST['first_name']) < 1 || strlen($_POST['last_name']) < 1 || strlen($_POST['email']) < 1 || strlen($_POST['headline']) < 1 || strlen($_POST['summary']) < 1 ) {
       $_SESSION['error'] = '<p style=color:red>All fields are required</p>';
       header('Location:edit.php?profile_id='.htmlentities($_GET['profile_id']));
@@ -73,6 +97,46 @@
         );
 
       $rank++;
+      }
+      $rank = 0;
+      $stmt = $pdo->prepare('DELETE FROM education WHERE profile_id = :profile');
+      $stmt->execute(array(
+        ':profile' => $_GET['profile_id'])
+      );
+      for($i=0; $i<=9; $i++) {
+        if ( ! isset($_POST['eduyear'.$i]) ) continue;
+        if ( ! isset($_POST['edu_school'.$i]) ) continue;
+        $stmt = $pdo->prepare('SELECT institution_id from Institution WHERE name = :institution LIMIT 1');
+        $stmt->execute(array(
+          ':institution' => $_POST['edu_school'.$i])
+        );
+        $institution = $stmt->fetch(PDO::FETCH_ASSOC);
+       if (!empty($institution['institution_id'])) {
+          $year = $_POST['eduyear'.$i];
+          $stmt = $pdo->prepare('INSERT INTO Education (profile_id, rank, year, institution_id) VALUES ( :pid, :rank, :year, :institution)');
+          $stmt->execute(array(
+            ':pid' => $_GET['profile_id'],
+            ':rank' => $rank,
+            ':year' => $year,
+            ':institution' => $institution['institution_id'])
+          );
+        }
+        else {
+          $stmt = $pdo->prepare('INSERT INTO Institution (name) VALUES ( :institution)');
+          $stmt->execute(array(
+            ':institution' => $_POST['edu_school'.$i])
+          );
+          $year = $_POST['eduyear'.$i];
+          $stmt = $pdo->prepare('INSERT INTO Education (profile_id, rank, year, institution_id) VALUES ( :pid, :rank, :year, :institution)');
+          $institution_id = $pdo->lastInsertId();
+          $stmt->execute(array(
+            ':pid' => $_GET['profile_id'],
+            ':rank' => $rank,
+            ':year' => $year,
+            ':institution' => $institution_id)
+          );
+        }
+        $rank++;
       }
       $_SESSION['error'] = '<p style="color:green">Profile updated</p>';
       header("location: index.php");
@@ -113,6 +177,8 @@
         }
         $stmt = $pdo->prepare('SELECT year, description  FROM Position WHERE profile_id = :em');
         $stmt->execute(array( ':em' => (is_numeric($_GET['profile_id'])) ? $_GET['profile_id'] : false));
+        $stmt2 = $pdo->prepare('SELECT education.year, institution.name  FROM Education JOIN institution ON education.institution_id = institution.institution_id WHERE profile_id = :em ORDER BY education.rank');
+        $stmt2->execute(array( ':em' => (is_numeric($_GET['profile_id'])) ? $_GET['profile_id'] : false));
       ?>
       <form method="post">
         <table>
@@ -124,6 +190,24 @@
         <p>Summary:<br/>
         <textarea name="summary" rows="12" cols="80"><?=htmlentities($row['summary'])?></textarea>
         </p>
+        <p>
+          <label for="addEdu">Education:</label>
+          <input type="submit" id="addEdu" value="+">
+        </p>
+        <div id="Education_fields">
+          <?php
+          $countEdu = 1;
+          while($subrow = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+          echo('<div id="eduposition'.$countEdu.'">');
+          echo('<p>Year: <input type="text" name="eduyear'.$countEdu.'" value="'.$subrow['year'].'" />');
+          echo('<input type="button" value="-"');
+          echo(' onclick="$(\'#eduposition'.$countEdu.'\').remove();return false;"></p>');
+          echo('<input type="text" name="edu_school'.$countEdu.'" value="'.$subrow['name'].'"></div>
+          ');
+          $countEdu++;
+          }
+          ?>
+        </div>
         <p>
           <label for="addPos">Position:</label>
           <input type="submit" id="addPos" value="+">
@@ -172,6 +256,34 @@
             }
           })
         })
+        //add Education
+        var  countEdu = <?=$countEdu?>;
+          $(document).ready(function(){
+            window.console && console.log('Document ready called');
+            $('#addEdu').click(function() {
+              event.preventDefault();
+              window.console && console.log('plus signed clicked');
+              if(countEdu > 9) {
+                alert("Maximum of nine position entries exceeded");
+                window.console && console.log('countEdu: '+countEdu);
+              }
+              else {
+                $('#Education_fields').append(
+                  '<div id="eduposition'+countEdu+'"> \
+                <p>Year: <input type="text" name="eduyear'+countEdu+'" value="" /> \
+                <input type="button" value="-" \
+                    onclick="$(\'#eduposition'+countEdu+'\').remove();return false;"></p> \
+                    <input type="text" size="80" name="edu_school'+countEdu+'" class="school" value="" /> \
+                </div>');
+                window.console && console.log("appended into div");
+                countEdu++;
+                window.console && console.log('countEdu: '+countEdu);
+                $('.school').autocomplete({
+                  source: "school.php"
+                });
+              }
+            })
+          })
       </script>
     </main>
   </body>
