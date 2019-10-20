@@ -49,7 +49,7 @@
         }
 
         if ( ! is_numeric($year) ) {
-          return "<p style=color:red>Position year must be numeric</p>";
+          return "<p style=color:red>Education year must be numeric</p>";
         }
       }
       return true;
