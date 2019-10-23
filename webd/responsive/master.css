@@ -35,21 +35,30 @@ h1, h2{
   h1 {
     background-color:  red;
     }
+
 }
 @media screen and (min-width:800px) {
-  h1 {
+
+}
+@media screen and (min-width:1024px) {
+	h1 {
 		font-size:9.2vw;
     background-color:  blue;
     }
+		.column {
+	 		width:45%;
+	 		display: inline-block;
+		}
 }
-@media screen and (min-width:1024px) {
-  h1 {
+@media screen and (min-width:1360px) {
+	h1 {
 		font-size:9vw;
     background-color:  green;
   }
-}
-@media screen and (min-width:1360px) {
-  h1 {
-    	font-size:8.8vw;
+	body {
+		font-size: 1.7em
+	}
+	.column {
+		width:30%;
 	}
 }
