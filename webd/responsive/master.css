@@ -1,7 +1,6 @@
 
 main {
-		width: 98%;
-		margin: 0 auto;
+		margin: 0 1%;
 	}
 
 
@@ -31,13 +30,10 @@ h1, h2{
 		width:300px;
 		display: inline-block;
 }
-@media screen and (min-width:200px) {
+@media screen and (min-width:0px) {
   h1 {
     background-color:  red;
     }
-
-}
-@media screen and (min-width:800px) {
 
 }
 @media screen and (min-width:1024px) {
